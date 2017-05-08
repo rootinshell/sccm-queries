@@ -32,6 +32,19 @@ inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.Resour
 where   DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 30
 ```
 
+#### Systems Pending a Reboot
+```sql
+select  SMS_R_SYSTEM.ResourceID,
+        SMS_R_SYSTEM.ResourceType,
+        SMS_R_SYSTEM.Name,
+        SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup,
+        SMS_R_SYSTEM.Client 
+from    SMS_R_System  
+inner join SMS_G_System_PatchStatusEx on SMS_G_System_PatchStatusEx.ResourceID = SMS_R_System.ResourceId 
+where   SMS_G_System_PatchStatusEx.LastStateName = “reboot pending”
+```
+
 ### All Workstations with Failed Software Updates
 ```sql
 select  SMS_R_SYSTEM.ResourceID, 
@@ -40,7 +53,8 @@ select  SMS_R_SYSTEM.ResourceID,
         SMS_R_SYSTEM.SMSUniqueIdentifier, 
         SMS_R_SYSTEM.ResourceDomainORWorkgroup, 
         SMS_R_SYSTEM.Client 
-from sms_r_system inner join SMS_UpdateComplianceStatus on SMS_UpdateComplianceStatus.machineid=sms_r_system.resourceid 
+from    sms_r_system 
+inner join SMS_UpdateComplianceStatus on SMS_UpdateComplianceStatus.machineid=sms_r_system.resourceid 
 where   SMS_UpdateComplianceStatus.LastEnforcementMessageID = 11
 ```
 
