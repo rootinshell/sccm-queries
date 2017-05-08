@@ -45,7 +45,7 @@ inner join SMS_G_System_PARTITION on SMS_G_System_PARTITION.ResourceId = SMS_R_S
 where   SMS_G_System_PARTITION.Size = 300
 ```
 
-####**Note - For the below queries, you'll have to enable the Win32_TPM class in your SCCM MOF. See (https://eliasleal.com/2014/09/19/show-tpm-values/) for more details!
+#### **Note - For the below TPM queries, you'll have to enable the Win32_TPM class in your SCCM MOF. See (https://eliasleal.com/2014/09/19/show-tpm-values/) for more details!
 
 #### Has TPM
 ```sql
