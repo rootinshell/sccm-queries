@@ -57,6 +57,18 @@ inner join SMS_G_System_PARTITION on SMS_G_System_PARTITION.ResourceId = SMS_R_S
 where   SMS_G_System_PARTITION.Size = 300
 ```
 
+#### BitLocker Status Protection OFF
+```sql
+select  SMS_R_SYSTEM.ResourceID,
+        SMS_R_SYSTEM.ResourceType,
+        SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup,
+        SMS_R_SYSTEM.Client 
+from    SMS_R_System 
+inner join SMS_G_System_ENCRYPTABLE_VOLUME on SMS_G_System_ENCRYPTABLE_VOLUME.ResourceId = SMS_R_System.ResourceId 
+where   SMS_G_System_ENCRYPTABLE_VOLUME.ProtectionStatus = 0
+```
+
 #### **Note - For the below TPM queries, you'll have to enable the Win32_TPM class by importing a custom MOF file to SCCM. See https://eliasleal.com/2014/09/19/show-tpm-values/ for more details!
 
 #### Has TPM
