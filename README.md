@@ -32,6 +32,18 @@ inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.Resour
 where   DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 30
 ```
 
+### All Workstations with Failed Software Updates
+```sql
+select  SMS_R_SYSTEM.ResourceID, 
+        SMS_R_SYSTEM.ResourceType, 
+        SMS_R_SYSTEM.Name, 
+        SMS_R_SYSTEM.SMSUniqueIdentifier, 
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup, 
+        SMS_R_SYSTEM.Client 
+from sms_r_system inner join SMS_UpdateComplianceStatus on SMS_UpdateComplianceStatus.machineid=sms_r_system.resourceid 
+where   SMS_UpdateComplianceStatus.LastEnforcementMessageID = 11
+```
+
 #### Has BitLocker Partition
 ```sql
 select  SMS_R_SYSTEM.ResourceID,
