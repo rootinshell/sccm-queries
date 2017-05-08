@@ -64,7 +64,8 @@ select  SMS_R_SYSTEM.ResourceID,
         SMS_R_SYSTEM.ResourceType,
         SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,
         SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client 
-from    SMS_R_System inner join SMS_G_System_TPM on SMS_G_System_TPM.ResourceId = SMS_R_System.ResourceId 
+from    SMS_R_System 
+inner join SMS_G_System_TPM on SMS_G_System_TPM.ResourceId = SMS_R_System.ResourceId 
 where   SMS_G_System_TPM.IsActivated_InitialValue = 1
 ```
 
@@ -83,6 +84,14 @@ where   SMS_G_System_TPM.IsEnabled_InitialValue = 1
 
 #### TPM Owned
 ```sql
+select  SMS_R_SYSTEM.ResourceID,
+        SMS_R_SYSTEM.ResourceType,
+        SMS_R_SYSTEM.Name,
+        SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup,
+        SMS_R_SYSTEM.Client from SMS_R_System 
+inner join SMS_G_System_TPM on SMS_G_System_TPM.ResourceId = SMS_R_System.ResourceId 
+where   SMS_G_System_TPM.IsOwned_InitialValue = 1
 ```
 
 
