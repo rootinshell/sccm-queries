@@ -9,7 +9,7 @@ select  SMS_R_SYSTEM.ResourceID,SMS_R_SYSTEM.ResourceType,
         SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client 
 from    SMS_R_System 
 inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceId 
-where DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 90
+where   DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 90
 ```
 
 #### No Reboot in more than 60 Days
@@ -19,7 +19,7 @@ select  SMS_R_SYSTEM.ResourceID,SMS_R_SYSTEM.ResourceType,
         SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client 
 from    SMS_R_System 
 inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceId 
-where DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 60
+where   DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 60
 ```
 
 #### No Reboot in more than 30 Days
@@ -29,7 +29,7 @@ select  SMS_R_SYSTEM.ResourceID,SMS_R_SYSTEM.ResourceType,
         SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client 
 from    SMS_R_System 
 inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceId 
-where DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 30
+where   DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 30
 ```
 
 #### Has BitLocker Partition
@@ -42,10 +42,48 @@ select  SMS_R_SYSTEM.ResourceID,
         SMS_R_SYSTEM.Client 
 from    SMS_R_System 
 inner join SMS_G_System_PARTITION on SMS_G_System_PARTITION.ResourceId = SMS_R_System.ResourceId 
-where SMS_G_System_PARTITION.Size = 300
+where   SMS_G_System_PARTITION.Size = 300
 ```
 
+####**Note - For the below queries, you'll have to enable the Win32_TPM class in your SCCM MOF. See (https://eliasleal.com/2014/09/19/show-tpm-values/) for more details!
 
+#### Has TPM
+```sql
+select  SMS_R_SYSTEM.ResourceID,
+        SMS_R_SYSTEM.ResourceType,
+        SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup,
+        SMS_R_SYSTEM.Client from SMS_R_System 
+inner join SMS_G_System_TPM on SMS_G_System_TPM.ResourceID = SMS_R_System.ResourceId 
+where   SMS_G_System_TPM.SpecVersion is not null 
+```
+
+#### TPM Activated
+```sql
+select  SMS_R_SYSTEM.ResourceID,
+        SMS_R_SYSTEM.ResourceType,
+        SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client 
+from    SMS_R_System inner join SMS_G_System_TPM on SMS_G_System_TPM.ResourceId = SMS_R_System.ResourceId 
+where   SMS_G_System_TPM.IsActivated_InitialValue = 1
+```
+
+#### TPM Enabled
+```sql
+select  SMS_R_SYSTEM.ResourceID,
+        SMS_R_SYSTEM.ResourceType,
+        SMS_R_SYSTEM.Name,
+        SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.ResourceDomainORWorkgroup,
+        SMS_R_SYSTEM.Client 
+from    SMS_R_System 
+inner join SMS_G_System_TPM on SMS_G_System_TPM.ResourceId = SMS_R_System.ResourceId 
+where   SMS_G_System_TPM.IsEnabled_InitialValue = 1
+```
+
+#### TPM Owned
+```sql
+```
 
 
 
