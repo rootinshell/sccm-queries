@@ -45,7 +45,7 @@ inner join SMS_G_System_PatchStatusEx on SMS_G_System_PatchStatusEx.ResourceID =
 where   SMS_G_System_PatchStatusEx.LastStateName = “reboot pending”
 ```
 
-### All Workstations with Failed Software Updates
+#### All Workstations with Failed Software Updates
 ```sql
 select  SMS_R_SYSTEM.ResourceID, 
         SMS_R_SYSTEM.ResourceType, 
