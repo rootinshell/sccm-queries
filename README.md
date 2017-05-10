@@ -34,15 +34,14 @@ where   DATEDIFF(DD, SMS_G_System_OPERATING_SYSTEM.LastBootUpTime, GETDATE()) > 
 
 #### Systems Pending a Reboot
 ```sql
-select  SMS_R_SYSTEM.ResourceID,
-        SMS_R_SYSTEM.ResourceType,
+SELECT  SMS_R_SYSTEM.ResourceID, 
+        SMS_R_SYSTEM.ResourceType, 
         SMS_R_SYSTEM.Name,
-        SMS_R_SYSTEM.SMSUniqueIdentifier,
+        SMS_R_SYSTEM.SMSUniqueIdentifier, 
         SMS_R_SYSTEM.ResourceDomainORWorkgroup,
-        SMS_R_SYSTEM.Client 
-from    SMS_R_System  
-inner join SMS_G_System_PatchStatusEx on SMS_G_System_PatchStatusEx.ResourceID = SMS_R_System.ResourceId 
-where   SMS_G_System_PatchStatusEx.LastStateName = “reboot pending”
+        SMS_R_SYSTEM.Client FROM sms_r_system 
+inner join SMS_UpdateComplianceStatus ON SMS_UpdateComplianceStatus.machineid=sms_r_system.resourceid
+WHERE   SMS_UpdateComplianceStatus.LastEnforcementMessageID = 9
 ```
 
 #### All Workstations with Failed Software Updates
